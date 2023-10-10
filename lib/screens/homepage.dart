@@ -9,6 +9,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  double _size = 60;
+  Color _color = Colors.red;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                             orientation == Orientation.portrait
                                 ? Padding(
                                     padding: const EdgeInsets.only(left: 50),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 250,
                                       child: Expanded(
                                         child: TextFormField(
@@ -339,19 +341,32 @@ class _HomePageState extends State<HomePage> {
                         height: 10,
                       ),
                       orientation == Orientation.portrait
-                          ? Container(
-                              height: 50,
-                              width: 140,
-                              decoration: BoxDecoration(
+                          ? InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _size = _size == 60 ? 80 : 60;
+                                  _color = _color == Colors.red
+                                      ? Colors.red.shade300
+                                      : Colors.red;
+                                });
+                              },
+                              child: AnimatedContainer(
+                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Colors.red),
-                              child: const Center(
-                                child: Text(
-                                  'BUY TICKET',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+                                  color: _color,
+                                ),
+                                curve: Curves.easeIn,
+                                height: _size,
+                                duration: const Duration(milliseconds: 500),
+                                width: 140,
+                                child: const Center(
+                                  child: Text(
+                                    'BUY TICKET',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             )
